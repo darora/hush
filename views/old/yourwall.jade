@@ -1,0 +1,81 @@
+extends layout
+
+block styles
+  if env == "prod"
+    link(rel="stylesheet", href="/css/main.css")
+  else if env == "dev"
+    link(rel="stylesheet/less", href="/css/main.less")
+    script(src="/js/libs/less-1.3.0.min.js")
+
+block scripts
+  script(data-main="/js/main", src="/js/libs/require.js")
+
+block content
+    header.navbar.navbar-fixed-top.navbar-inverse
+      .navbar-inner
+        .container
+          a.brand= title
+          
+          //- nav bar links
+          ul.nav.pull-right
+            li.dropdown
+              a#user.dropdown-toggle(data-toggle='dropdown')
+                img(src="https://graph.facebook.com/#{ user.id }/picture?type=square")
+                span= user.name
+                b.caret
+              ul.dropdown-menu
+                li 
+                  a(href="#") Account Settings
+                li 
+                  a(href="/logout") Logout
+    
+    #main.container
+      .row
+        .span3
+          ul.nav.nav-tabs.nav-stacked
+            li
+              a(href='/') All Posts
+            li
+              a(href='/friends') Friends Posts
+            li
+              a(href='/invite', target="_blank") Invite Friends
+            li.active
+              a Your Wall
+          #postform
+            textarea(placeholder="What's on your mind?", rows='3')
+            br
+            a.btn.btn-inverse Post
+        
+        .span9#posts_container
+            if posts
+              for post in posts
+                .post.well(data-post-id='#{post._id}')
+                  //- p= post.date
+
+                  p
+                    span.postbody!= post.body
+                    br
+                    small
+                      time.posttime(datetime='')= post.readabledate()
+                  
+                  .commentscontainer
+                    if post.comments.length !== 0
+                      .comments.well.well-small
+                        for comment in post.comments
+                          .comment 
+                            span= comment.body
+                            br
+                            small
+                              time.posttime(datetime='')= comment.readabledate()
+
+                  .input-append
+                    input.span6.commentform(type='text', placeholder='Write a comment...')
+                    a.btn.commentsubmit comment
+
+            else
+              p No posts yet. TODO: blank slate.
+
+
+    //- footer.footer
+    //-   .container
+    //-       p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cras justo odio, dapibus ac facilisis in, egestas eget quam.

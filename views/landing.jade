@@ -1,0 +1,86 @@
+extends layout
+
+block styles
+  if env == "prod"
+    link(rel="stylesheet", href="/css/main.css")
+  else if env == "dev"
+    link(rel="stylesheet/less", href="/css/main.less")
+    script(src="/js/libs/less-1.3.0.min.js")
+  script(src="/js/libs/jquery-1.8.0.js")
+  script(src="/js/libs/underscore.js")
+
+block scripts
+  #fb-root
+  script                                                                                                                                                                
+   window.fbAsyncInit = function() {
+     FB.init({
+       appId: '#{appid}', // App ID
+       status: true, // check login status
+       cookie: true
+     });
+
+     // Check if the current user is logged in
+     // and has authorized the app
+     FB.getLoginStatus(function(response) {
+       // Check the result of the user
+       if(response && response.status == 'connected') {
+         FB.api('/me', function(response) {
+           var userimage = "<img src='https://graph.facebook.com/" + response.id + "/picture?type=square'/>";
+           var username = "<span>" + response.name + "</span>";
+           $("#user").html(userimage + username);
+           
+         });
+         FB.api('/me/friends?fields=installed', function(response) {
+           if (!response || response.error) {
+             //boo
+               console.log("ERRORR");
+           }
+           else {
+             response = _(response["data"]).filter(function(e) {
+               return (typeof e['installed'] !== 'undefined' && e['installed'] === true);
+             });
+             _(response).each(function(e) {
+               var userimage = "<img src='https://graph.facebook.com/" + e.id + "/picture?type=square'/>";
+               $("#users-list").append(userimage);
+             });
+           }
+         });
+           //https://graph.facebook.com/me/friends?fields=installed
+       } else {
+         // The user has not authenticated your app,
+         // proceed with your normal (anonymous) flow.
+         //SELECT uid, name, pic_square FROM user WHERE is_app_user  AND uid IN (SELECT uid2 FROM friend WHERE uid1 = me())
+       }
+     });
+   };
+
+   // Load the SDK Asynchronously
+   (function(d){
+     var js;
+     var id = 'facebook-jssdk';
+     var ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script');
+     js.id = id;
+     js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+
+block content
+    #container
+      header.container
+            a.brand(href='/')= title
+
+            #user_wrapper
+              #user
+
+      #main.container
+        //- Main banner on landing page
+        .hero-unit
+          //- h1= title
+          p #{title} lets you talk to your friends & more. Anonymously. <br /> Got an opinion about a sensitive topic but don't want to get flamed for it?
+          a.btn(href='/auth/facebook') Use #{ title }
+        #users-wrap
+          p Join your friends & converse anonymously!
+          #users-list

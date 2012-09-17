@@ -1,0 +1,118 @@
+extends layout
+block styles
+  if env == "prod"
+    link(rel="stylesheet", href="/css/main.css")
+  else if env == "dev"
+    link(rel="stylesheet/less", href="/css/main.less")
+    script(src="/js/libs/less-1.3.0.min.js")
+
+block scripts
+  script(data-main="/js/main", src="/js/libs/require.js")
+
+block content
+    header.navbar.navbar-fixed-top.navbar-inverse
+      .navbar-inner
+        .container
+          a.brand= title
+          
+          //- nav bar links
+          ul.nav.pull-right
+            li.dropdown
+              - if (typeof(user) != 'undefined')
+                a#user.dropdown-toggle(data-toggle='dropdown')
+                  img(src="https://graph.facebook.com/#{ user.id }/picture?type=square")
+                  span= user.name
+                  b.caret
+                ul.dropdown-menu
+                  li 
+                    a(href="#") Account Settings
+                  li 
+                    a(href="/logout") Logout
+    
+    #main.container
+      .row
+        // .span3
+        //   ul.nav.nav-tabs.nav-stacked
+        //     li.active
+        //       a Friends Feed
+        //     li
+        //       a All Posts
+        //     li
+        //       a(href="/invite", target="_blank") Invite Friends
+        //     li
+        //       a Your Wall
+        //   #postform
+        //     textarea(placeholder="What's on your mind?", rows='3')
+        //     br
+        //     a.btn.btn-inverse Post
+        
+        .span12#posts_container
+            h2#privacy Hush Privacy Policy
+            h4 Definitions
+            ol
+              li References to ”Our”, ”We”, ”Us” and "Hush" shall be references to Hush.
+              li References to ”You”, ”Users” and ”Your” shall mean references to user(s) visiting this web site, as the context requires.
+            h4 Information Collection
+            p Browsing our websites does not require your identities to be revealed. However, under the following circumstances, you are not anonymous to us.
+            h4 User
+            p We will ask for your personal information. The personal information collected includes but not restricting to the following:
+            ol
+              li Private information such as name and birthdate
+              li Contact information such as email address, mobile number and physical address
+              li Additional information which we may ask for if we believe the site policies are violated
+              
+            p Once you log into the account, your identity will be revealed to us.
+            h4 Information Usage
+            p The primary purpose in collecting personal information is to provide the users with a smooth and customized experience.
+            p We will use the information collected for the following purposes:
+            ol
+              li To provide its intended services
+              li To resolve disputes, and troubleshoot problems and errors
+              li To assist in law enforcement purposes and prevent/restrict the occurrences of potentially illegal or prohibited activities
+            h4 Disclosure of information
+            p We may share information with governmental agencies or other companies assisting us in fraud prevention or investigation. We may do so when:
+            ol
+              li permitted or required by law; or,
+              li trying to protect against or prevent actual or potential fraud or unauthorized transactions; or,
+              li investigating fraud which has already taken place.
+            p The information is not provided to these companies for marketing purposes.
+            h4 Usage of Cookies
+            p Cookies are small files placed in your computer hard drives. We use it to analyse our site traffic. We have also used cookies to maintain your signed in status when you login to our websites.
+            h4 Commitment to Data Security
+            p Your personally identifiable information is kept secure. Only authorized employees, agents and contractors (who have agreed to keep information secure and confidential) have access to this information. All emails and newsletters from this site allow you to opt out of further mailings.
+            h4 Changes to the policies
+            p We reserved the rights to amend this Privacy Policy at any time. Upon posting of new policies, it will take immediate effect. We may notify you should there be any major changes to the policies.
+            h2 Support
+            h6 Post about your problem with a "#hushsupport" tag, and we'll get back to you ;)
+            h6 You could also be trite, and email contact@darora.com
+              
+            h2#terms Terms of Service
+            p Hi, thanks for using Hush!
+            p We'll keep this simple. [Err. We tried]. We strive to maintain your anonymity in all use of our service (access & use of our website, associated services). However, we are still given to following the law, and all it may entail.
+            p You are responsible for the use of our service & any content you might post to it, & for any consequences thereof. Remember--anonymity is not a free license to break laws, or to be rude, but rather, a privilege to enable frank discussions of matters. Repeated trolls _will_ be banned from the service.
+            p You may use the Services only in compliance with these Terms and all applicable local, state, national, and international laws, rules and regulations.
+            p The services we provide may change from time to time without prior notice. We might stop the service, and may not be able to provide prior notice. We might also create limits on your usage of our service.
+            p The Service may include advertisements in the future, however, they will *NOT* be customized or tailored based on your usage of the service, since that would undermine the service itself.
+            p As part of your usage of our service, you consent to the transfer of any content you may create or post to the Republic of Singapore, and/or other countries for storage, processing & use by Hush.
+            p All content is the sole responsibility of the person who originated it. You understand that your use of our service might expose you to offensive, harmful, inaccurate, or otherwise inappropriate content, and that under no circumstances is Hush liable in any way for any loss or damage of any kind incurred as a result of the use of any content made available through this service.  
+            p You retain your rights to any Content you submit, post or display on or through the Services. By submitting, posting or displaying Content on or through the Services, you grant us a worldwide, non-exclusive, royalty-free license (with the right to sublicense) to use, copy, reproduce, process, adapt, modify, publish, transmit, display and distribute such Content in any and all media or distribution methods (now known or later developed).
+            p You agree that this license includes the right for Hush to provide, promote, and improve the Services and to make Content submitted to or through the Services available to other companies, organizations or individuals who partner with Hush for the syndication, broadcast, distribution or publication of such Content on other media and services, subject to our terms and conditions for such Content use.
+            p All right, title, and interest in and to the services (excluding content provided by users) are and will remain the exclusive property of Hush and its licensors.
+            p All Content must be lawful, not spammy, and clear of virus or other malware. More specifically, but without limiting the foregoing, it must comply with the following standards:
+            p Not contain any material which is defamatory, obscene, indecent, abusive, offensive, harassing, violent, hateful, inflammatory or otherwise objectionable.
+            p Not promote sexually explicit or pornographic material, violence, or discrimination based on race, sex, religion, nationality, disability, sexual orientation or age.
+            p Not infringe any patent, trademark, trade secret, copyright or other intellectual property rights of any other person.
+            p Not violate the legal rights (including the rights of publicity and privacy) of others or contain any material that could give rise to any civil or criminal liability under applicable laws or regulations or that otherwise may be in conflict with these Terms of Service.
+            p Not be likely to deceive any person.
+            p Not promote any illegal activity, or advocate, promote or assist any unlawful act.
+            p Not cause annoyance, inconvenience or needless anxiety or be likely to upset, embarrass, alarm or annoy any other person.
+            p Not be used to impersonate any person, or to misrepresent your identity or affiliation with any person or organization.
+            p Not involve commercial activities or sales , such as contests, sweepstakes and other sales promotions, barter oradvertising.
+            p Not give the impression that they emanate from us or any other person or entity, if this is not the case.
+            p We reserve the right at all times (but will not have an obligation) to remove or refuse to distribute any Content on the Services, to suspend or terminate users, and to reclaim usernames without liability to you. We also reserve the right to access, read, preserve, and disclose any information as we reasonably believe is necessary to (i) satisfy any applicable law, regulation, legal process or governmental request, (ii) enforce the Terms, including investigation of potential violations hereof, (iii) detect, prevent, or otherwise address fraud, security or technical issues, (iv) respond to user support requests, or (v) protect the rights, property or safety of Hush, its users and the public.
+            p TL;DR Hush does not disclose personally identifying information to third parties except in accordance with our Privacy Policy.
+            p You may not access, tamper with, or use non-public areas of this service, or probe, scan for vulnerabilities our systems, or breach any security or auth measures, or access or search the service by means other than the available, published interface.
+            p Crawling the service is permissible if done in accordance with the provisions of the robots.txt file.
+            p Please respect any copyright laws applicable when posting content to our service. In case of breaches, we will follow any laws that apply to us. Obviously, we'll be removing your infringing content if we're notified of its status as such (duh).
+            p If you're found to be a troll/detrimental to the quality of service for our other users repeatedly, we may, at our sole discretion, and without any liability to you, terminate your use of our services. 
+            p Your access to and use of the service or any content is at your own risk. You understand and agree that the service  are provided to you on an "AS IS" and "AS AVAILABLE" basis. Without limiting the foregoing, to the maximum extent permitted under applicable law, WE DISCLAIM ALL WARRANTIES AND CONDITIONS, WHETHER EXPRESS OR IMPLIED, OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.

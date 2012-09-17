@@ -1,0 +1,8 @@
+extends layout
+block content
+  #allPosts
+    -each post in posts 
+      div.date= post.date
+      div.text
+        a(href="/tests/viewPost/"+post._id)!=post.text
+        

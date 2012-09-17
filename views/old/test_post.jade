@@ -1,0 +1,17 @@
+entends layout
+
+block content
+  #singlePost
+    #text= post.text
+    #comments
+      -each comment in post.comments
+        div.date= comment.date
+        div.text= comment.text
+    #newComment
+      form(method="post",action="/tests/comment")
+        input(type="hidden",name="_id",value=post._id)
+        div
+          span Comment:
+          textarea(name="commentText",rows=5,id="newCommentText")
+        #submit
+          input(type='submit',value="Post")

@@ -1,0 +1,36 @@
+block scripts
+  script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js",type = "text/javascript")
+
+block content
+  form(id="createUserForm")
+    div
+      span enter a user id
+      input(type="text",id="userid",name="user")
+      input(type="submit",id="button",value="Go")
+
+    #Results
+  form(id="addFriends")
+    div
+      span enter a friends id
+      input(type="text",name="friend")
+      input(type="submit",id="button1",value="Go")
+  script
+    function postResponse(data){
+      console.log(data);
+    }
+    $('#createUserForm').submit(function(){
+        console.log("button clicked");
+        $.post("/tests/newUser", $("#createUserForm").serialize(),function(data){
+            console.log(data);
+          });
+        
+        return false;
+      });
+     $('#addFriends').submit(function(){
+        console.log("button clicked");
+        $.post("/tests/addFriends", $("#addFriends").serialize(),function(data){
+            console.log(data);
+          });
+        
+        return false;
+      });

@@ -1,0 +1,75 @@
+extends layout
+
+block styles
+  link(rel="stylesheet", href="/js/shadowbox/shadowbox.css")
+  if env == "prod"
+    link(rel="stylesheet", href="/css/main.css")
+  else if env == "dev"
+    link(rel="stylesheet/less", href="/css/main.less")
+    script(src="/js/libs/less-1.3.0.min.js")
+
+block scripts
+  script
+    if (window.location.hash == '#_=_') {
+      window.location.hash = '';
+    }
+    var bootstrap = !{JSON.stringify(bootstrap)};
+    window.user_id = "#{user._id}"
+  script(data-main="/js/main", src="/js/libs/require.js")
+  script(src="/js/shadowbox/shadowbox.js")
+    Shadowbox.init({
+      modal: true
+    });
+
+
+block content
+    #container
+      header.container
+            a.brand(href='/')= title
+
+            #notifications
+              .icon
+                //- .number 3
+              .notificationswrapper
+                //- the caret at the top.
+                .caret
+                  .innercaret
+                  .outercaret
+
+                .notifications
+                  .title Notifications
+                  .contents
+
+            #search
+              input#search_input(type="text", placeholder="type to filter, ↵ to search")
+
+            #user_wrapper.loggedin
+              #user
+                img(src="https://graph.facebook.com/#{ user.id }/picture?type=square")
+                span= user.name
+                a#logout logout
+
+            //- form.form-search#search-form
+            //-   div.input-append
+            //-     input(type="text", class="span2 search-query", id="search_input", placeholder="↵ to search")
+            //-     button(type="submit", class="btn") Search
+      
+      #main.container
+          #leftbar
+            #navbar
+              a.nav_link#friends Friends Feed
+              a.nav_link#allposts All Posts
+              a.nav_link#mostpopular Trending
+              a.nav_link#inviteFriends Invite Friends
+              a.nav_link#yourwall Your Wall
+
+          #rightcontent
+            #postform
+              textarea(placeholder="What's on your mind?")
+              #urlattachments
+
+            #content_container
+              
+            footer
+              .copyright
+                p &copy; Hush 2012.

@@ -1,0 +1,38 @@
+doctype 5
+html
+  head
+    title= title
+    script(type="text/javascript")
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-34300440-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    script(src="/js/mixpanel.js")
+      $(function() { mixpanel.track("Main app loaded..."); });
+    script
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '#{app_id}', // App ID
+          status     : true, // check login status
+          cookie     : true, // enable cookies to allow the server to access the session
+          xfbml      : true  // parse XFBML
+        });
+      };
+      // Load the SDK Asynchronously
+      (function(d){
+        var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        d.getElementsByTagName('head')[0].appendChild(js);
+      }(document));
+    //- link(rel="stylesheet", href="/css/bootstrap.css")
+    block styles
+  body
+    #fb-root
+    block content
+    block scripts
+    

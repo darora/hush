@@ -1,0 +1,121 @@
+html(xmlns="http://www.w3.org/1999/xhtml", dir="ltr", lang="en-US", xmlns:fb="https://www.facebook.com/2008/fbml")
+  head(prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# hush_app: http://ogp.me/ns/fb/hush_app#")
+    title Hush Entry
+    meta(property="fb:app_id", content="#{app_id}")
+    meta(property="og:type", content="hush_app:entry")
+    meta(property="og:title", content="#{entry.title}")
+    meta(property="og:image", content="#{entry.image}")
+    meta(property="og:description", content="#{entry.description}")
+    meta(property="og:url", content="#{entry.url}")
+    meta(property="og:determiner", content="a")
+    if env == "prod"
+      link(rel="stylesheet", href="/css/reset.css")
+      link(rel="stylesheet", href="/css/main.css")
+    else if env == "dev"
+      link(rel="stylesheet/less", href="/css/reset.less")
+      link(rel="stylesheet/less", href="/css/main.less")
+      script(src="/js/libs/less-1.3.0.min.js")
+    style(type="text/css") .
+      .commentswrapper {
+        display: block !important;
+        margin-bottom: 50px;
+      }
+      #leftbar img { margin-left: 20px; }
+      body {
+        background: url('../images/bg.png') 0 0 repeat;
+      }
+      #main.container {
+        background-color: white;
+        margin-top: 200px;
+        border-radius: 10px;
+        width: 800px;
+        -moz-box-shadow: 0 0 30px 0px;
+        -webkit-box-shadow: 0 0 30px 0px;
+        -o-box-shadow: 0 0 30px 0px;
+        box-shadow: 0 0 30px 0px;
+      }
+      #content_container { margin-right: 30px; }
+      .postbody { margin-top: 40px; }
+      h3 { margin-bottom: 20px; color: #979797;}
+  
+  body
+    div#fb-root
+    script(src="http://hush.darora.com/js/libs/jquery-1.8.0.js")
+    script(src="http://hush.darora.com/js/libs/underscore.js")
+      var u = {};
+      u.imageUrlRegex = /!(https?:\/\/[^\s]+)/g;
+        
+             
+      u.imageURL = function(string, matches, matchesModifiedHandler) {
+        var old_matches_length = matches.length;      
+        var new_matches = string.match(u.imageUrlRegex);
+        var new_matches_b = new_matches;
+        if (typeof new_matches === "undefined" || new_matches === null) { //no matches
+         return {matches: matches, new_matches: []};
+        }
+        new_matches = _(new_matches).difference(matches);
+        matches = _.union(_.intersection(matches, new_matches_b), new_matches);
+        // this is useful when used in conjunction with listening on a message being composed. Otherwise, its meaningless, and an empty function should be passed in.
+        if (matches.length != old_matches_length+1) {
+         matchesModifiedHandler();
+        }
+        return {matches: matches, new_matches: new_matches};
+      };
+      $(function() {
+        var post = $(".postbody");
+        var obj = u.imageURL(post.text(), [], function() {});
+          console.log("FOO");
+        _(obj.matches).each(function(m) {
+          console.log("BOOO");
+          post.html(post.html().replace(m, ""));
+          post.append("<a href='"+m.substring(1)+"' rel='shadowbox'><img width='80' height='80' src='"+m.substring(1)+"'/></a>");
+        });
+        $(".commentbody").each(ind, e) {
+          e = $(e);
+          var obj = u.imageURL(e.text(), [], function() {});
+          _(obj.matches).each(function(m) {
+            e.html(e.html().replace(m, ""));
+            e.append("<a href='"+m.substring(1)+"' rel='shadowbox'><img width='80' height='80' src='"+m.substring(1)+"'/></a>");
+          });
+        }
+      });
+      
+
+
+    script
+      // window.fbAsyncInit = function() {
+      //   FB.init({
+      //     appId      : '#{app_id}', // App ID
+      //     status     : true, // check login status
+      //     cookie     : true, // enable cookies to allow the server to access the session
+      //     xfbml      : true  // parse XFBML
+      //   });
+      // };
+  
+      // // Load the SDK Asynchronously
+      // (function(d){
+      //   var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+      //   js = d.createElement('script'); js.id = id; js.async = true;
+      //   js.src = "//connect.facebook.net/en_US/all.js";
+      //   d.getElementsByTagName('head')[0].appendChild(js);
+      // }(document));
+    #main.container.clearfix
+      #leftbar.clearfix
+        a(href="http://hush.darora.com/")
+          img(src="#{entry.image}", alt="Hush Logo")
+      #rightcontent.clearfix
+        #content_container
+          .postbody= entry.description
+          //TODO::vote counts
+          .commentswrapper
+            .commentscontainer
+              each comment, i in entry.comments
+                .comment
+                  .commentbody= comment.body
+                    #posts_container
+          // .post
+          //   p= entry.description
+          h3
+            | This entry was posted on Hush, a platform for conversing with friends anonymous. Join your friends at 
+            a(href="http://hush.darora.com") Hush
+    
