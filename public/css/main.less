@@ -1,0 +1,335 @@
+// css reset
+@import "reset.less";
+
+// for fixed header
+body {
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 20px;
+    color: #4F4F4F;
+    font-size: 15px;
+    color: #4F4F4F;
+    background-color: #ffffff;
+    overflow-y: scroll; //this prevents the scroll bar from hiding when there's not enough content. So when you're filtering, or changing sections, the page doesn't ``jump around''
+}
+
+.container {
+    margin: auto;
+    width: 700px;
+}
+
+#leftbar {
+    width: 130px;
+    float: left;
+}
+
+#rightcontent {
+    width: 560px;
+    float: right;
+}
+
+#users-list {
+    img {
+        margin-right: 5px;
+    }
+}
+
+#user_wrapper {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    height: 40px;
+    overflow: hidden;
+    #user {
+        padding: 5px;
+        position: relative;
+        -webkit-transition: top 0.3s ease;
+        -moz-transition: top 0.3s ease;
+        -o-transition:top 0.3s ease;
+        transition: top 0.3s ease;
+        img {
+            margin: 0px 0 -5px 0;
+            height: 30px;
+        }
+        span {
+            display: inline-block;
+            float: right;
+            padding: 5px;
+            font-weight: 300;
+        }
+        a {
+            margin-top: 10px;
+            font-weight: 100;
+            text-align: center;
+            display: block;
+            padding: 5px;
+            font-size: 18px;
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+    &.loggedin {
+        cursor: pointer;
+        &:hover {
+            #user {
+                top: -100%;
+            }
+        }
+    }
+}
+.commentscontainer {
+    clear: both;
+}
+#urlattachments {
+    border-bottom: solid 1px #ddd;
+    list-style: none outside none;
+    li {
+        a {
+            text-decoration: none;            
+            position: relative;
+            display: block;
+            height: 100px;
+        }
+        img {
+            display: inline-block;
+            height: 100px;
+            width: auto;
+            align: middle;  
+            float: left;
+        }
+        span {
+            display: inline-block;
+            padding: 40px 0;
+            color: #888;
+        }
+    }
+}
+
+@secondarycolor: fadeout(#ddd,50);
+
+
+
+//loading styles
+@import "loading.less";
+
+//post styles
+@import "post.less";
+
+// header
+header {
+    position: relative;
+    height: 40px;
+    padding-bottom: 10px;
+    border-bottom: dotted 1px #ddd;
+    .brand {
+        position: absolute;
+        left: 0px;
+        top: 21px;
+        margin-left: 10px;
+        font-size: 30px;
+        font-weight: 100;
+        color: inherit;
+        text-decoration: none;
+        width: 70px;
+        display: inline-block;
+    }
+}
+#search {
+    display: inline-block;
+    margin-left: 15px;
+    position: absolute;
+    left: 107px;
+    top: 16px;
+    input {
+        width: 200px;
+        outline: none;
+        border: none;
+        border-bottom: solid 1px #bbb;
+        padding: 3px 5px;
+        line-height: 20px;
+        font-weight: 300;
+        font-size: inherit;
+        font-family: inherit;
+    }
+}
+// nav styles
+#navbar {
+    margin-top: 10px;
+    .nav_link {
+        // box-shadow: 0 0.5px 0 0 #ffffff inset, 0 1px 2px 0 #B3B3B3;
+        color: inherit;
+        text-decoration: none;
+        display: block;
+        width: 90px;
+        padding: 10px;
+        margin: 3px 0;
+        cursor: pointer;
+        &:hover {
+            background-color: fadeout(@secondarycolor, 5);
+        }
+        &.active {
+            cursor: auto;
+            background-color: @secondarycolor;
+        }
+    }
+}
+
+#notifications {
+    position: absolute;
+    left: 70px;
+    top: 0px;
+    width: 40px;
+    height: 40px;
+    .icon {
+        width: 35px;
+        height: 35px;
+        padding: 12px 0 3px 0;
+        margin: 0 10px;
+        background-image: url(/img/notifications.png);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-origin: content-box;
+        cursor: pointer;
+        position: relative;
+        .number {
+            color: white;
+            background-color: darken(#d70000, 10%);
+            font-size: 10px;
+            font-weight: bold;
+            line-height: 15px;
+            padding: 0px 5px;
+            color: white;
+            text-align: center;
+            border-radius: 100px;
+            position: absolute;
+            right: 1px;
+            bottom: 0px;
+        }
+    }
+    .notificationswrapper {
+        display: none;
+        position: absolute;
+        top: 15px;
+        left: -10px;
+        border: solid 1px #ddd;
+        background-color: white;
+        width: 300px;
+        // min-height: 200px;
+        position: relative;
+        border-radius: 3px;
+        -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        .caret {
+            position: absolute;
+            top: -15px;
+            left: 25px;
+            width: 20px;
+            height: 15px;
+            .outercaret {
+                position: absolute;
+                top: 1.5px;
+                left: 1px;
+                border-left: 11px solid transparent;
+                border-right: 11px solid transparent;
+                border-bottom: 14px solid #eeeeee;
+            }
+            .innercaret {
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+                border-bottom: 15px solid #ccc;
+            }
+        }
+        .notifications {
+            padding-top: 30px;
+            position: relative;
+            .title {
+                position: absolute;
+                padding: 5px;
+                top: 0;
+                width : 290px;
+                font-weight: 300;
+                font-size: 14px;
+                border-bottom: solid 1px #ddd;
+            }
+            .contents {
+                min-height: 70px;
+                max-height: 300px;
+                overflow-y: scroll;
+                overflow-x: hidden;
+            }
+            .notification {
+                padding: 5px 7px;
+                min-height: 50px;
+                background-color: white;
+                border-top : solid 1px #ddd;
+                display: block;
+                cursor: pointer;
+                &:hover {
+                    background-color: lighten(#FFF380, 20);
+                }
+                .action {
+                    font-weight: 600;
+                }
+                font-size: 14px;
+                line-height: 17px;
+                font-weight: 300;
+
+                .time {
+                    padding-top: 3px;
+                    font-size: 12px;
+                    color: #aaa;
+                }
+            }
+        }
+        .nonotifications {
+            padding: 10px;
+            height: 30px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 300;
+
+        }
+    }
+    &:hover {
+        .icon {
+            // border-bottom: solid 1px #ccc;
+        }
+    }
+}
+
+
+.hero-unit {
+    padding: 10px;
+    .btn {
+        display: block;
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+        padding-top: 20px;
+    }
+}
+
+#users-wrap {
+    padding: 10px;
+}
+
+.copyright {
+    // float: left;
+    margin-top: 50px;
+    padding: 15px 0px;
+    p {
+        font-weight: 300;
+        font-size: 14px;
+        color: #aaa;
+    }
+}
+.positivevotes {
+    color: green
+}
+.negativevotes {
+    color: red
+}
